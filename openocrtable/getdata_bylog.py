@@ -3,6 +3,8 @@ import os
 import subprocess
 import time
 
+targetDir='/disk1/zhiyuntest/asr/logs'
+flog = "springboot.log.2019-08-16*"
 
 def RunCmd(cmd, shellformat = True):
     p = subprocess.Popen(cmd, shell=shellformat, close_fds=True, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -24,30 +26,24 @@ def genjson(key, k, out):
         json.dump(dd, f)
 
 ttime=int(os.environ.get('atime'))/60
-
 print ttime
-targetDir='/disk1/zhiyuntest/asr/logs'
 
 mydeal="%s/deal.sh" % (os.path.dirname(os.path.abspath(__file__)))
-#mydeal="%s/deal.sh" % ("/disk1")
-
-ff = "springboot.log.2019-08-16*"
-print ff
 
 keys = ["youdaoAsr", "session_time", "afterConnectionEstablished"]
 for key in keys:
-    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep mean |awk -F'=' {'print \$2'}" '''% (targetDir,mydeal,ff,key, ttime)
+    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep mean |awk -F'=' {'print \$2'}" '''% (targetDir,mydeal,flog,key, ttime)
     ret,out,err  = RunCmd(cmd) 
     print cmd,ret,out,err
     genjson(key, 'avg', out.strip())
     print "======== ======="
-    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep qps |awk -F':' {'print \$2'}" ''' % (targetDir, mydeal,ff,key,ttime)
+    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep qps |awk -F':' {'print \$2'}" ''' % (targetDir, mydeal,flog,key,ttime)
     ret,out,err = RunCmd(cmd)
     print cmd,ret,out,err
     genjson(key, 'qps', out.strip())
     print "======== ======="
 
-    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep p99 |awk -F':' {'print \$2'}" ''' % (targetDir, mydeal, ff,key,ttime)
+    cmd='''ssh zj131 "cd %s; sh %s %s  %s %s| grep p99 |awk -F':' {'print \$2'}" ''' % (targetDir, mydeal, flog,key,ttime)
     ret,out,err = RunCmd(cmd)
     print cmd,ret,out,err
     genjson(key, '99', out.strip())
