@@ -43,8 +43,6 @@ interface_jtl="speech_eval_perf.jtl"
 
 在以后的测试中，会和这个测试做diff，如果比当前值变坏了一定的阈值，则这个指标会出现红色的告警。
 
-智云&质量评测 &gt; 性能测试平台设计实践 &gt; image2019-8-18_0-47-33.png
-
 其中阈值的设定，在各个接口目录的continuous_evaluation.py 文件中
 
 示例
