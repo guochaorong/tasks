@@ -1,6 +1,4 @@
-**1.增加接口脚本**  
-
-接入python脚本发压的新接口
+# 接入python脚本发压的新接口
  拉取代码: git clone https://github.com/guochaorong/tasks.git tasks
 
  cd tasks
@@ -24,7 +22,7 @@ targetDir='/disk1/zhiyuntest/asr/logs' #修改成服务日志路径
 flog = "springboot.log.2019-08-*"  #修改成服务对应的日志
 并执行cp -f getdata_bylog.py getdata.py
 
-接入jmeter发压的新接口
+# 接入jmeter发压的新接口
 如果服务没有生成日志，则需通过jmeter脚本实现。
 
 需要使用的模板是 https://github.com/guochaorong/tasks/tree/master/asreval
@@ -36,7 +34,7 @@ copy一份模板接口： cp -rf  asreval  新接口名字
 jmeter_dir="/disk1/guocr/perf_test/apache-jmeter-4.0/extras"
 interface_jmx="speech_eval_perf.jmx"
 interface_jtl="speech_eval_perf.jtl"
-性能告警阈值设定
+# 性能告警阈值设定
 在https://github.com/guochaorong/tasks中 各个接口目录，会在接口第一次运行后，自动生成一个latest_kpis文件，里面是各个指标的数据。
 
 在以后的测试中，会和这个测试做diff，如果比当前值变坏了一定的阈值，则这个指标会出现红色的告警。
@@ -44,11 +42,13 @@ interface_jtl="speech_eval_perf.jtl"
 智云&质量评测 &gt; 性能测试平台设计实践 &gt; image2019-8-18_0-47-33.png
 
 其中阈值的设定，在各个接口目录的continuous_evaluation.py 文件中
-
+示例
+```python
 import os
 import sys
 sys.path.append(os.environ['ceroot'])
 from kpi import CostKpi, DurationKpi, AccKpi
+##kpy定义在脚本：https://github.com/guochaorong/performance_test/blob/master/tests/kpi.py
 
 p99_kpi = DurationKpi('99', 0.1, actived=True) #0.1代表10%的误差
 avg_kpi = DurationKpi('avg', 0.1, actived=True)
@@ -60,31 +60,9 @@ tracking_kpis = [
     avg_kpi,
     qps_kpi,
 ]
+```
 上述阈值均默认设定为10%，如果有需要可以根据实际情况调整
 
-在模型目录增加continuous_evaluation.py， 在里面设置支持的评价指标和其阈值  
-目前支持的评价指标有， 精确度：acc， 损失函数：cost，耗时：duration
 
-注意:
-1. 此脚本运行环境为python3. 
-1. 变量tracking_kpis为必需变量, 会被CE系统import和分析.
 
-示例
-```python
-import os
-import sys
-sys.path.append(os.environ['ceroot'])
-from kpi import CostKpi, DurationKpi, AccKpi
-##kpy定义在脚本：https://github.com/guochaorong/performance_test/blob/master/tests/kpi.py
-
-99_kpi = AccKpi('train_acc', 0.05) #0.05 标示阈值
-avg_kpi = AccKpi('test_acc', 0.05)
-qps_kpi = DurationKpi('train_duration', 0.1)
-
-tracking_kpis = [
-    99_kpi,
-    avg_kpi,
-    qps_kpi,
-
-```
 
