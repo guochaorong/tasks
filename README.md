@@ -5,7 +5,7 @@
 
  copy一份模板接口： cp -rf  openocrtable  新口名
 
- 修改项：
+ **修改项：**
 
  1.修改接口请求single.py 文件
 
@@ -34,6 +34,7 @@ copy一份模板接口： cp -rf  asreval  新接口名字
 jmeter_dir="/disk1/guocr/perf_test/apache-jmeter-4.0/extras"
 interface_jmx="speech_eval_perf.jmx"
 interface_jtl="speech_eval_perf.jtl"
+
 # 性能告警阈值设定
 在https://github.com/guochaorong/tasks中 各个接口目录，会在接口第一次运行后，自动生成一个latest_kpis文件，里面是各个指标的数据。
 
@@ -42,6 +43,7 @@ interface_jtl="speech_eval_perf.jtl"
 智云&质量评测 &gt; 性能测试平台设计实践 &gt; image2019-8-18_0-47-33.png
 
 其中阈值的设定，在各个接口目录的continuous_evaluation.py 文件中
+
 示例
 ```python
 import os
