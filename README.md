@@ -3,7 +3,7 @@
 
  cd tasks
 
- copy一份模板接口： cp -rf  openocrtable  新口名
+ copy一份模板接口： cp -rf  python_demo  新口名
 
  **修改项：**
 
@@ -30,7 +30,7 @@ flog = "springboot.log.2019-08-*"  #修改成服务对应的日志
 
 需要使用的模板是 https://github.com/guochaorong/tasks/tree/master/asreval
 
-copy一份模板接口： cp -rf  asreval  新接口名字
+copy一份模板接口： cp -rf  jmeter_demo  新接口名字
 
 修改https://github.com/guochaorong/tasks/blob/master/asreval/run.sh 中，jmeter发压相关文件：
 ```shell
